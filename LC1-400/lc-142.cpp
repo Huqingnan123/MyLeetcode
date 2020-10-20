@@ -12,10 +12,10 @@ public:
         ListNode* fast = head;
         while (slow != nullptr && fast != nullptr)
         {
-            slow = slow->next;           //move 1
+            slow = slow->next;            //move 1
             if (fast->next == nullptr)    //fast->next会为空说明无环
                 return nullptr;
-            fast = fast->next->next;     //move 2
+            fast = fast->next->next;      //move 2
 
             //when they meet, find merge position, they must meet
             if (fast == slow)
