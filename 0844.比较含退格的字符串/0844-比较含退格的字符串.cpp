@@ -2,7 +2,7 @@ class Solution {
 public:
     bool backspaceCompare(string S, string T) {
         string s;
-        string t;          //stringģ��ջ
+        string t;          //string模拟栈
         for(auto& ch : S)
         {
             if(ch == '#' && !s.empty())
