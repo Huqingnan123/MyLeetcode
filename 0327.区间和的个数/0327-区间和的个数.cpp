@@ -7,19 +7,19 @@ public:
         long long preSum = 0;
         long long result = 0;
         for (int i = 0; i < size; i++ ){
-            preSum += nums[i];         //一共size个前缀和
+            preSum += nums[i];         
 
             if(preSum >= lower && preSum <= upper )
                 result++;
             
             if(preSum_set.size() != 0){
-                long long thresh1 = preSum - upper;
-                long long thresh2 = preSum - lower;
-
-                auto it1 = preSum_set.lower_bound(thresh1);
-                auto it2 = preSum_set.upper_bound(thresh2);
-
-                result += (std::distance(it1, it2) );
+                //查找multiset中sum的个数，使得lower <= presum - sum <= upper
+                //化简之后就是 presum - upper <= sum <= presum - lower 
+                //当前前缀和 减去 之前前缀和，前缀和作差满足上述要求，就可得到一种符合题意的区间
+                //在multiset中查找符合要求的sum的个数 
+                auto it1 = preSum_set.lower_bound(preSum - upper);
+                auto it2 = preSum_set.upper_bound(preSum - lower);
+                result += (std::distance(it1, it2));
             } 
             preSum_set.insert(preSum);
         }
