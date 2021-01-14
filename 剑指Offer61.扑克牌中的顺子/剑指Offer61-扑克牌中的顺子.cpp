@@ -3,15 +3,10 @@ public:
     bool isStraight(vector<int>& nums) {
         sort(nums.begin(),nums.end());
         int zeroNum = 0;
-        int i;
-        for(i = 0; i < nums.size(); i++)
-        {
-            if(nums[i] == 0)
-                zeroNum++;
-            else
-                break;
-        }
-        for(i = i+1; i < nums.size(); i++)
+        int i = 0;
+        while(nums[i++] == 0)
+            zeroNum++;
+        for( ; i < nums.size(); i++)
         {
             if(nums[i] == nums[i-1])
                 return false;
