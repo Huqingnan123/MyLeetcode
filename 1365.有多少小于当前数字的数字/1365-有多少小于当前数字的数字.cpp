@@ -4,10 +4,10 @@ public:
         int count[101] = {0};
         for(auto& num : nums)
             count[num]++;
-        //类似于“计数排序”的手段
+        //绫讳技浜庘�滆鏁版帓搴忊�濈殑鎵嬫
         for(int i = 1; i < 100; i++)
         {
-            count[i] += count[i-1];       //计算小于等于每个数的个数
+            count[i] += count[i-1];       //璁＄畻灏忎簬绛変簬姣忎釜鏁扮殑涓暟
         }
         for(auto& num : nums)
         {

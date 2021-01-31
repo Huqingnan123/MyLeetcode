@@ -11,26 +11,26 @@ public:
     }
     int findKthNumber(int n, int k) 
     {
-        //用p记录当前的位置
-        int p=1;
+        //用index记录当前的位置
+        int index=1;
         long long prefix=1;
-        while(p<k)
+        while(index<k)
         {
             long long count=getNum(prefix,n);
-            //count算的时候是把p也就是当前位置算进去的
-            //那么k要在当前子树下，即p+count-1>=k即p+count>k
-            if(p+count>k)
+            //count算的时候是把index也就是当前位置算进去的
+            //那么k要在当前子树下，即index+count-1>=k即index+count>k，更新prefix和index（prefix向下面的子树走）
+            if(index+count>k)
             {
                 //例如原来是1，现在变成10
                 prefix*=10;
                 //p从1变到了10，即字典序序号+1
-                p++;
+                index++;
             }
-            //表明k不在当前prefix的子树里
-            else if(p+count<=k)
+            //表明k不在当前prefix的子树里（prefix向右边的兄弟节点走）
+            else if(index+count<=k)
             {
                 prefix++;
-                p+=count;
+                index+=count;
             }
         }        
         return prefix;
