@@ -33,6 +33,7 @@ public:
         // 根据 root 所在位置在中序inorder中分成左右两棵子树（unordered_map哈希查找更快）
         int in_middle = in_map[root_val];
 
+        // 这里一定 “先右后左” 的顺序
         // 构造右子树
         root->right = helper(in_middle + 1, in_right, inorder, postorder);
         // 构造左子树
