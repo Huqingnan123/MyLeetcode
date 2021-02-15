@@ -1,6 +1,8 @@
 class Solution {
 public:
-    //此题思路同全排列Ⅰ，Ⅱ题（46，47题）
+    //1、可以直接采用sort之后next_permutation一直生成下一个排列
+
+    //2、不采用stl中的函数，可以采用dfs回溯算法，此题思路同全排列Ⅰ，Ⅱ题（46，47题）
     vector<string> permutation(string s) {
         vector<string> res;
         dfs(s, res, 0);
