@@ -23,7 +23,7 @@ public:
                 count++;
             else
                 count--;
-            //当count变为0时，需要转变计数元素curNum为当前元素nums[i]
+            //当count变为0时，需要转变计数元素curNum为当前元素nums[i], count重新置为1
             if(count == 0)
             {
                 curNum = nums[i];
