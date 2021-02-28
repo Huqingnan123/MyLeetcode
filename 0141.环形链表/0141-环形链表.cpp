@@ -9,24 +9,18 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        bool have_circle = 0;
-        if(head == nullptr || head->next == nullptr)
-            return have_circle;
         ListNode* slow = head;
         ListNode* fast = head;
         while(slow != nullptr && fast != nullptr)
         {
+            if(fast->next == nullptr)
+                return false;
             slow = slow->next;
-            if(fast->next != nullptr)
-                fast = fast->next->next;
-            else
-                return have_circle;
+            fast = fast->next->next;
+            // 链表有环，两指针一定会相遇
             if(fast == slow)
-            {
-                have_circle = 1;
-                break;
-            }    
+                return true;
         }
-        return have_circle;
+        return false;
     }
 };

@@ -13,15 +13,15 @@ public:
         ListNode* fast = head;
         while(slow != nullptr && fast != nullptr)
         {
-            slow = slow->next;           //move 1
             if(fast->next == nullptr)    //fast->next会为空说明无环
                 return nullptr;
+            slow = slow->next;           //move 1
             fast = fast->next->next;     //move 2
 
             //when they meet, find merge position, they must meet
             if(fast == slow)
             {
-                while(head != fast)   //equal distance to merge point
+                while(head != fast)   //equal distance to merge point(move 1)
                 {
                     head = head->next;
                     fast = fast->next;
