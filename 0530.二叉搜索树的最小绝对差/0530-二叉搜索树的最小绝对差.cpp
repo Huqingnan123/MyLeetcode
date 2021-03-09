@@ -9,23 +9,19 @@
  */
 class Solution {
 public:
-    int minimum = INT_MAX;
-    TreeNode* prev = nullptr;
+    int result = INT_MAX;
+    int pre = -1;
     int getMinimumDifference(TreeNode* root) {
-        inorder(root);
-        return minimum;
+        inorderTraverse(root);
+        return result;
     }
-    //中序遍历就是一个有序序列!!!
-    void inorder(TreeNode* root)
-    {
+    void inorderTraverse(TreeNode* root) {
         if(root == nullptr) 
-            return;
-        inorder(root -> left);     
-        //保证执行min操作时，prev一定是中序序列中在当前root之前的那一个结点
-        if(prev != nullptr) 
-            minimum = min(minimum, root -> val - prev -> val);
-        //向右子树遍历之前，更新prev为当前root
-        prev = root;          
-        inorder(root -> right);
+            return ;
+        inorderTraverse(root->left);
+        if(pre != -1)
+            result = min(result, root->val - pre);
+        pre = root->val;
+        inorderTraverse(root->right);
     }
 };
