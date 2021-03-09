@@ -12,13 +12,10 @@
 class Solution {
 public:
     TreeNode* insertIntoBST(TreeNode* root, int val) {
-        if(!root)
-        {
+        if(root == nullptr)
             root = new TreeNode(val);
-        }
-        else
-        {
-            pair<TreeNode*,bool> father = make_pair(root,0);   //0 is left
+        else {
+            pair<TreeNode*, bool> father = make_pair(root, 0);   //0 is left
             TreeNode* temp = root;
             while(temp != nullptr)
             {
