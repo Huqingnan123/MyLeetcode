@@ -1,33 +1,35 @@
 class Solution {
 public:
-    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        int total_number = nums1.size() + nums2.size();
-        auto ptr1 = nums1.begin();
-        auto ptr2 = nums2.begin();
-        //å°†nums2ä¸­çš„å…ƒç´ æŒ‰å¤§å°æ’åºæ’å…¥nums1ä¸­
-        while(ptr2 != nums2.end() && ptr1 != nums1.end())
-        {
-            if(*ptr2 <= *ptr1)
-            {
-                ptr1 = ++nums1.insert(ptr1,*ptr2);
-                ptr2++;
-            }
-            else  
-                ptr1++;
-        }
-        //nums2åˆ°åº•ï¼Œç»“æŸæ’å…¥
-        //nums1åˆ°åº•ï¼Œnums2ç›´æ¥åŠ åœ¨æœ«å°¾
-        if(ptr1 == nums1.end())
-        {
-            while(ptr2 != nums2.end())
-            {
-                nums1.emplace_back(*ptr2);
-                ptr2++;
-            }
-        }    
-        if(total_number%2 == 0)
-            return ((double)nums1[total_number/2-1] + (double)nums1[total_number/2]) / 2;
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) 
+    {
+        int m = nums1.size();
+        int n = nums2.size();
+        // Ğ¡trick, ²»ÓÃ·ÖÆæÅ¼ 
+        // ÖĞÎ»Êı = £¨left + right£©/2
+        int left = (m + n + 1) / 2;
+        int right = (m + n + 2) / 2;
+        return (findKth(nums1, 0, nums2, 0, left) + findKth(nums1, 0, nums2, 0, right)) / 2.0;
+    }
+    //ÔÚÁ½¸öÓĞĞòÊı×éÖĞÕÒµ½µÚk¸öÔªËØ£¨ÀıÈçÕÒµÚÒ»¸öÔªËØ£¬k=1£¬¼´nums[0]£©
+    //i: nums1µÄÆğÊ¼Î»ÖÃ j: nums2µÄÆğÊ¼Î»ÖÃ£¨i£¬j¶¼ÊÇ´Ó0¿ªÊ¼£©
+    int findKth(vector<int>& nums1, int i, vector<int>& nums2, int j, int k)
+    {
+        //Èônums1Îª¿Õ£¨»òÊÇËµÆäÖĞÊı×ÖÈ«±»ÌÔÌ­ÁË£©
+        //ÔÚnums2ÖĞÕÒµÚk¸öÔªËØ£¬´ËÊ±nums2ÆğÊ¼Î»ÖÃÊÇj£¬ËùÒÔÊÇj+k-1
+        if(i >= nums1.size())    return nums2[j + k - 1];
+        //nums2Í¬Àí
+        if(j >= nums2.size())    return nums1[i + k - 1];
+
+        //µİ¹é³ö¿Ú
+        if(k == 1)  return std::min(nums1[i], nums2[j]);
+
+        //ÕâÁ½¸öÊı×éµÄµÚK/2Ğ¡µÄÊı×Ö£¬Èô²»×ãk/2¸öÊı×ÖÔò¸³ÖµÕûĞÍ×î´óÖµ£¬ÒÔ±ãÌÔÌ­ÁíÒ»Êı×éµÄÇ°k/2¸öÊı×Ö
+        int midVal1 = (i + k/2 - 1 < nums1.size()) ? nums1[i + k/2 - 1] : INT_MAX;
+        int midVal2 = (j + k/2 - 1 < nums2.size()) ? nums2[j + k/2 - 1] : INT_MAX;
+        //¶ş·Ö·¨ºËĞÄ²¿·Ö
+        if(midVal1 < midVal2)
+            return findKth(nums1, i + k/2, nums2, j, k - k/2);
         else
-            return (double)nums1[total_number/2];
+            return findKth(nums1, i, nums2, j + k/2, k - k/2);
     }
 };
