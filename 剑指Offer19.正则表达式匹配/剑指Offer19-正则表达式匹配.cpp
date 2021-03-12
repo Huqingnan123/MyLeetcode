@@ -1,7 +1,6 @@
 class Solution {
 public:
-    // hard!!!
-     bool isMatch(string s, string p) {
+    bool isMatch(string s, string p) {
         int sLen = s.length(), pLen = p.length();
         vector<vector<bool> > dp(sLen + 1, vector<bool>(pLen + 1, false));
         // s,p¾ùÎª¿Õ×Ö·û´®""Æ¥Åätrue

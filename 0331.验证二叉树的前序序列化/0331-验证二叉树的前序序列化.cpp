@@ -3,16 +3,7 @@ public:
     bool isValidSerialization(string preorder) {
         if(preorder == "#")
             return true;
-        vector<string> strVec;
-        int start = 0;
-        int i = 0;
-        for( ; i < preorder.size(); i++) {
-            if(preorder[i] != ',')
-                continue;
-            strVec.push_back(preorder.substr(start, i - start));
-            start = i + 1;
-        }
-        strVec.push_back(preorder.substr(start, i - start));
+        vector<string> strVec = splitNode(preorder);
         stack<string> s;
         bool first = true;
         for(auto str : strVec) {
@@ -35,5 +26,18 @@ public:
             }
         }
         return s.empty();
+    }
+    vector<string> splitNode(string preorder) {
+        vector<string> strVec;
+        int start = 0;
+        int i = 0;
+        for( ; i < preorder.size(); i++) {
+            if(preorder[i] != ',')
+                continue;
+            strVec.push_back(preorder.substr(start, i - start));
+            start = i + 1;
+        }
+        strVec.push_back(preorder.substr(start, i - start));
+        return strVec;
     }
 };
