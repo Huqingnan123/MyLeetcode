@@ -1,34 +1,23 @@
 class Solution {
 public:
     vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
-        int left = newInterval[0];
-        int right = newInterval[1];
-        bool placed = false;
-        vector<vector<int>> result;
-        //遍历原来的intervals里面每一个区间
-        for (auto& interval: intervals) {
-            if (interval[0] > right) {
-                // 在newInterval区间的右侧且无交集
-                if (!placed) {
-                    result.push_back({left, right});
-                    placed = true;          //标记newInterval是否加入result中                   
-                }
-                result.push_back(interval);
-                //一旦如此，之后全是这个分支
-            }
-            else if (interval[1] < left) {
-                // 在newInterval区间的左侧且无交集
-                result.push_back(interval);
-            }
-            else {
-                // 与newInterval区间有交集，二合一，计算它们的并集形成一个新的newInterval
-                left = min(left, interval[0]);
-                right = max(right, interval[1]);
-            }
+        vector<vector<int>> res;
+        int i = 0;
+        //首先push之前的不相干区间
+        while(i < intervals.size() && intervals[i][1] < newInterval[0]){
+            res.push_back(intervals[i]);
+            i++;
         }
-        if (!placed) {
-            result.push_back({left, right});
+        //一直合并中间的重叠区间
+        while(i< intervals.size() && intervals[i][0] <= newInterval[1]){
+            newInterval[0] = min(newInterval[0], intervals[i][0]);
+            newInterval[1] = max(newInterval[1], intervals[i][1]);
+            i++;
         }
-        return result;
+        res.push_back(newInterval);
+        //处理最后的不相干区间
+        while(i < intervals.size())
+            res.push_back(intervals[i++]);
+        return res;
     }
 };
