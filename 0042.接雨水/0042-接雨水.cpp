@@ -9,12 +9,12 @@ public:
         while(left < right) {
             if(height[left] <= height[right]) {
                 leftMax = max(leftMax, height[left]);
-                result += (leftMax - height[left]);
+                result += leftMax - height[left];
                 left++;
             }
-            else if(height[left] > height[right]) {
+            else if(height[right] < height[left]) {
                 rightMax = max(rightMax, height[right]);
-                result += (rightMax - height[right]);
+                result += rightMax - height[right];
                 right--;
             }
         }
