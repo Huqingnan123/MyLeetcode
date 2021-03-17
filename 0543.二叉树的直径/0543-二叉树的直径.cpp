@@ -13,8 +13,6 @@ class Solution {
 public:
     int result = 0;
     int diameterOfBinaryTree(TreeNode* root) {
-        if(root == nullptr)
-            return 0;
         TreeDepth(root);
         return result;
     }
