@@ -1,36 +1,36 @@
 class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
-        //便于后续构建newword的查找，提高查找速度
-        unordered_set<string> wordSet(wordList.begin(), wordList.end());
-        if (wordSet.find(endWord) == wordSet.end()) 
+        unordered_set<string> wordMap(wordList.begin(), wordList.end());
+        if(wordMap.find(endWord) == wordMap.end())
             return 0;
-        //记录从beginword到各个string的路径长度,且防止死循环
-        unordered_map<string, int> length_map; 
-        queue<string> My_queue;
-        My_queue.push(beginWord);
-        length_map.emplace(make_pair(beginWord, 1));
-
-        while(!My_queue.empty()) {
-            string word = My_queue.front();
-            My_queue.pop();
-            for (int i = 0; i < word.size(); i++) 
-            {
-                string newWord = word;             // 每个位置依次置换一个字母构建新单词
-                for (int j = 0 ; j < 26; j++) {
-                    newWord[i] = j + 'a'; 
-                    if (wordSet.find(newWord) != wordSet.end() 
-                    && length_map.find(newWord) == length_map.end()) 
-                    {    
-                        if(newWord == endWord)
-                            return length_map[word] + 1;
-                        length_map.insert(make_pair(newWord, length_map[word] + 1));
-                        My_queue.push(newWord);
+        //防止重复选单词导致死循环
+        unordered_map<string, bool> visited;
+        queue<string> q;
+        q.push(beginWord); 
+        visited[beginWord] = true;
+        int level = 1;
+        while(!q.empty()) {
+            int number = q.size();
+            while(number-- != 0) {
+                string word = q.front();
+                q.pop();
+                if(word == endWord)
+                    return level;
+                //尝试把word的每一位字符进行a~z的替换，符合替换要求即可
+                for(int i = 0; i < word.size(); ++i) {
+                    string temp = word;
+                    for(int j = 0; j < 26; ++j) {
+                        temp[i] = j + 'a';
+                        if(wordMap.find(temp) != wordMap.end() && visited.find(temp) == visited.end()) {
+                            q.push(temp);
+                            visited[temp] = true;
+                        }    
                     }
                 }
             }
+            level++;
         }
-        //最后未匹配，返回长度0
         return 0;
     }
 };
